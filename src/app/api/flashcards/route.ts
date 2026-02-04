@@ -71,9 +71,16 @@ export async function POST(request: Request) {
 
     const { flashcardId, quality } = await request.json();
 
-    if (quality < 0 || quality > 5) {
+    if (!flashcardId) {
       return NextResponse.json(
-        { error: "Quality must be between 0 and 5" },
+        { error: "Flashcard ID is required" },
+        { status: 400 }
+      );
+    }
+
+    if (typeof quality !== "number" || quality < 0 || quality > 5) {
+      return NextResponse.json(
+        { error: "Quality must be 0-5 (0=complete blackout, 1=wrong, 3=hard, 4=good, 5=easy)" },
         { status: 400 }
       );
     }

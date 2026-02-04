@@ -2,8 +2,13 @@ import { SignJWT, jwtVerify, JWTPayload as JoseJWTPayload } from 'jose';
 import { cookies } from 'next/headers';
 import { prisma } from './prisma';
 
+// Validate JWT_SECRET in production
+if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required in production');
+}
+
 const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'mat133-drill-secret'
+  process.env.JWT_SECRET || 'mat133-drill-dev-secret-change-in-production'
 );
 
 export interface JWTPayload extends JoseJWTPayload {

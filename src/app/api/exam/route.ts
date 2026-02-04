@@ -25,7 +25,13 @@ export async function GET(request: Request) {
       }
 
       // Get questions for this exam
-      const questionIds = JSON.parse(examSession.questionIds);
+      let questionIds: string[];
+      try {
+        questionIds = JSON.parse(examSession.questionIds);
+      } catch {
+        return NextResponse.json({ error: "Corrupted exam session data" }, { status: 500 });
+      }
+
       const questions = await prisma.question.findMany({
         where: { id: { in: questionIds } },
       });
@@ -33,11 +39,16 @@ export async function GET(request: Request) {
       // Parse and order questions
       const orderedQuestions = questionIds.map((id: string) => {
         const q = questions.find((q) => q.id === id);
-        return q ? {
-          ...q,
-          choices: q.choices ? JSON.parse(q.choices) : null,
-          solutionSteps: JSON.parse(q.solutionSteps),
-        } : null;
+        if (!q) return null;
+        try {
+          return {
+            ...q,
+            choices: q.choices ? JSON.parse(q.choices) : null,
+            solutionSteps: q.solutionSteps ? JSON.parse(q.solutionSteps) : [],
+          };
+        } catch {
+          return { ...q, choices: null, solutionSteps: [] };
+        }
       }).filter(Boolean);
 
       return NextResponse.json({
@@ -79,7 +90,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { action, sessionId, answers, timeLimit = 60 } = await request.json();
+    const { action, sessionId, answers, timeLimit: rawTimeLimit = 60 } = await request.json();
+
+    // Validate and cap timeLimit (5 minutes to 2 hours)
+    const timeLimit = Math.min(Math.max(Number(rawTimeLimit) || 60, 5), 120);
 
     if (action === "start") {
       // Get random questions from all modules

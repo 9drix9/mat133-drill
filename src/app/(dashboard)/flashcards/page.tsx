@@ -33,6 +33,8 @@ export default function FlashcardsPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [selectedModule, setSelectedModule] = useState(initialModule);
   const [dueOnly, setDueOnly] = useState(true);
   const [stats, setStats] = useState({ reviewed: 0, total: 0 });
@@ -64,10 +66,12 @@ export default function FlashcardsPage() {
   const currentCard = flashcards[currentIndex];
 
   const rateCard = async (quality: number) => {
-    if (!currentCard) return;
+    if (!currentCard || saving) return;
 
+    setSaving(true);
+    setError(null);
     try {
-      await fetch("/api/flashcards", {
+      const res = await fetch("/api/flashcards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -75,6 +79,11 @@ export default function FlashcardsPage() {
           quality,
         }),
       });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to save progress");
+      }
 
       setStats((prev) => ({ ...prev, reviewed: prev.reviewed + 1 }));
 
@@ -86,8 +95,11 @@ export default function FlashcardsPage() {
         // All cards reviewed
         setFlipped(false);
       }
-    } catch (error) {
-      console.error("Failed to rate card:", error);
+    } catch (err) {
+      console.error("Failed to rate card:", err);
+      setError("Failed to save your rating. Please try again.");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -269,11 +281,17 @@ export default function FlashcardsPage() {
               <p className="text-center text-sm font-medium">
                 Did you know the answer?
               </p>
+              {error && (
+                <div className="text-center text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 p-2 rounded">
+                  {error}
+                </div>
+              )}
               <div className="grid grid-cols-3 gap-2">
                 <Button
                   variant="outline"
                   className="flex-col h-auto py-4 border-red-300 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-950"
                   onClick={() => rateCard(1)}
+                  disabled={saving}
                 >
                   <X className="h-5 w-5 mb-1" />
                   <span className="text-sm font-semibold">Didn&apos;t Know</span>
@@ -283,8 +301,9 @@ export default function FlashcardsPage() {
                   variant="outline"
                   className="flex-col h-auto py-4 border-yellow-300 text-yellow-600 hover:bg-yellow-50 dark:border-yellow-700 dark:text-yellow-400 dark:hover:bg-yellow-950"
                   onClick={() => rateCard(3)}
+                  disabled={saving}
                 >
-                  <span className="text-xl mb-1">😐</span>
+                  <span className="text-xl mb-1" aria-label="Kind of">😐</span>
                   <span className="text-sm font-semibold">Kind Of</span>
                   <span className="text-[10px] text-muted-foreground">Had to think</span>
                 </Button>
@@ -292,6 +311,7 @@ export default function FlashcardsPage() {
                   variant="outline"
                   className="flex-col h-auto py-4 border-green-300 text-green-600 hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-950"
                   onClick={() => rateCard(5)}
+                  disabled={saving}
                 >
                   <Check className="h-5 w-5 mb-1" />
                   <span className="text-sm font-semibold">Knew It!</span>
@@ -299,7 +319,7 @@ export default function FlashcardsPage() {
                 </Button>
               </div>
               <p className="text-center text-xs text-muted-foreground">
-                Keyboard: 1 = Didn&apos;t know, 3 = Kind of, 5 = Knew it
+                {saving ? "Saving..." : "Keyboard: 1 = Didn't know, 3 = Kind of, 5 = Knew it"}
               </p>
             </div>
           )}

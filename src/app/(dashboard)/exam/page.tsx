@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,7 +41,7 @@ export default function ExamPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [timeLimit, setTimeLimit] = useState(60);
-  const [results, setResults] = useState<{ isCorrect: boolean; correctAnswer: string; moduleTag: string }[]>([]);
+  const [results, setResults] = useState<{ questionId?: string; isCorrect: boolean; correctAnswer: string; moduleTag: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pastExams, setPastExams] = useState<ExamSession[]>([]);
@@ -50,21 +50,33 @@ export default function ExamPage() {
     loadPastExams();
   }, []);
 
+  const [autoSubmit, setAutoSubmit] = useState(false);
+
+  // Handle auto-submit when timer expires
   useEffect(() => {
-    if (mode === "exam" && timeRemaining !== null && timeRemaining > 0) {
-      const timer = setInterval(() => {
-        setTimeRemaining((prev) => {
-          if (prev === null || prev <= 1) {
-            submitExam();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      return () => clearInterval(timer);
+    if (autoSubmit && mode === "exam") {
+      setAutoSubmit(false);
+      submitExam();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, timeRemaining]);
+  }, [autoSubmit, mode]);
+
+  // Timer effect - only depends on mode, not timeRemaining
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (mode !== "exam" || timeRemaining === null || timeRemaining <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeRemaining((prev) => {
+        if (prev === null || prev <= 1) {
+          setAutoSubmit(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [mode]);
 
   const loadPastExams = async () => {
     try {
@@ -105,8 +117,13 @@ export default function ExamPage() {
   };
 
   const submitExam = async () => {
-    if (!session) return;
+    if (!session) {
+      setError("No active exam session. Please start a new exam.");
+      setMode("start");
+      return;
+    }
     setLoading(true);
+    setError(null);
     try {
       const res = await fetch("/api/exam", {
         method: "POST",
@@ -118,12 +135,17 @@ export default function ExamPage() {
         }),
       });
       const data = await res.json();
-      setResults(data.results);
+      if (!res.ok) {
+        setError(data.error || "Failed to submit exam. Please try again.");
+        return;
+      }
+      setResults(data.results || []);
       setSession((prev) => prev ? { ...prev, score: data.score, completedAt: new Date().toISOString() } : null);
       setMode("results");
       loadPastExams();
     } catch (error) {
       console.error("Failed to submit exam:", error);
+      setError("Failed to submit exam. Please check your connection and try again.");
     } finally {
       setLoading(false);
     }
@@ -475,14 +497,14 @@ export default function ExamPage() {
           <CardContent>
             <div className="space-y-3">
               {questions.map((q, i) => {
-                const result = results[i];
+                const result = results.find((r: { questionId?: string }) => r.questionId === q.id) || results[i];
                 return (
                   <div
                     key={q.id}
                     className={`p-4 rounded-lg border ${
                       result?.isCorrect
-                        ? "bg-green-50 border-green-200"
-                        : "bg-red-50 border-red-200"
+                        ? "bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800"
+                        : "bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-800"
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -499,7 +521,7 @@ export default function ExamPage() {
                         <p className="text-xs text-muted-foreground mt-1">
                           Your answer: {answers[q.id] || "(no answer)"}
                           {!result?.isCorrect && (
-                            <span className="text-green-700 ml-2">
+                            <span className="text-green-700 dark:text-green-400 ml-2">
                               Correct: {result?.correctAnswer}
                             </span>
                           )}

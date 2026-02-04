@@ -26,8 +26,11 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate count (1-50)
+    const validCount = Math.min(Math.max(Number(count) || 1, 1), 50);
+
     const questions = [];
-    for (let i = 0; i < Math.min(count, 20); i++) {
+    for (let i = 0; i < validCount; i++) {
       const question = generateQuestion(moduleTag);
       if (question) {
         questions.push(question);

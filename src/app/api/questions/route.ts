@@ -12,7 +12,8 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const moduleTag = searchParams.get("module");
-    const limit = parseInt(searchParams.get("limit") || "10");
+    // Cap limit at 100 to prevent excessive database load
+    const limit = Math.min(Math.max(parseInt(searchParams.get("limit") || "10") || 10, 1), 100);
     const difficulty = searchParams.get("difficulty");
 
     const where: Record<string, unknown> = {};
@@ -27,12 +28,18 @@ export async function GET(request: Request) {
     // Shuffle and take the requested limit
     const shuffled = shuffleArray(questions).slice(0, limit);
 
-    // Parse JSON fields
-    const parsed = shuffled.map((q) => ({
-      ...q,
-      choices: q.choices ? JSON.parse(q.choices) : null,
-      solutionSteps: JSON.parse(q.solutionSteps),
-    }));
+    // Parse JSON fields with error handling
+    const parsed = shuffled.map((q) => {
+      try {
+        return {
+          ...q,
+          choices: q.choices ? JSON.parse(q.choices) : null,
+          solutionSteps: q.solutionSteps ? JSON.parse(q.solutionSteps) : [],
+        };
+      } catch {
+        return { ...q, choices: null, solutionSteps: [] };
+      }
+    });
 
     return NextResponse.json({ questions: parsed });
   } catch (error) {

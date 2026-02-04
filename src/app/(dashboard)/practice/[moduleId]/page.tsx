@@ -59,6 +59,7 @@ export default function PracticeSessionPage() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [saveWarning, setSaveWarning] = useState<string | null>(null);
   const [questionCount, setQuestionCount] = useState("10");
   const [useGenerator, setUseGenerator] = useState(false);
   const [stats, setStats] = useState({ correct: 0, total: 0 });
@@ -132,9 +133,10 @@ export default function PracticeSessionPage() {
     }));
 
     // Record progress
+    setSaveWarning(null);
     try {
       const timeSpent = Date.now() - startTime;
-      await fetch("/api/progress", {
+      const res = await fetch("/api/progress", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -145,8 +147,12 @@ export default function PracticeSessionPage() {
           moduleTag: moduleId,
         }),
       });
+      if (!res.ok) {
+        setSaveWarning("Progress may not have been saved");
+      }
     } catch (error) {
       console.error("Failed to record progress:", error);
+      setSaveWarning("Progress may not have been saved");
     }
   };
 
@@ -430,6 +436,12 @@ export default function PracticeSessionPage() {
                     </>
                   )}
                 </div>
+                {saveWarning && (
+                  <p className="text-xs text-orange-600 dark:text-orange-400 mt-2 flex items-center gap-1">
+                    <AlertCircle className="h-3 w-3" />
+                    {saveWarning}
+                  </p>
+                )}
               </div>
             )}
 

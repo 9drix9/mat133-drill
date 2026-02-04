@@ -228,7 +228,7 @@ export default function PracticeSessionPage() {
             {stats.correct}/{stats.total} correct
           </Badge>
         </div>
-        {/* Options row - hidden on mobile, shown at bottom */}
+        {/* Options row - desktop only, mobile version below question card */}
         <div className="hidden sm:flex items-center justify-end gap-2">
           <Select value={questionCount} onValueChange={setQuestionCount}>
             <SelectTrigger className="w-24">
@@ -460,6 +460,35 @@ export default function PracticeSessionPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Mobile Options - shown only on small screens */}
+      <div className="flex sm:hidden items-center justify-between gap-2 px-1">
+        <Select value={questionCount} onValueChange={setQuestionCount}>
+          <SelectTrigger className="w-20 h-9 text-xs">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="5">5 Q&apos;s</SelectItem>
+            <SelectItem value="10">10 Q&apos;s</SelectItem>
+            <SelectItem value="15">15 Q&apos;s</SelectItem>
+            <SelectItem value="20">20 Q&apos;s</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-9 text-xs px-2"
+          onClick={() => setUseGenerator(!useGenerator)}
+        >
+          {useGenerator ? "Stored" : "Generate"}
+        </Button>
+        <Link href={`/flashcards?module=${moduleId}`}>
+          <Button variant="outline" size="sm" className="h-9 text-xs px-2">
+            <BookOpen className="h-3 w-3 mr-1" />
+            Cards
+          </Button>
+        </Link>
+      </div>
 
       {/* Session Complete */}
       {currentIndex === questions.length - 1 && isCorrect !== null && (

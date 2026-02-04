@@ -24,38 +24,68 @@ export default function HomePage() {
             MAT133 <span className="text-primary">Drill</span>
           </h1>
           <p className="text-xl text-muted-foreground">
-            Master statistics for your midterm with targeted practice, spaced repetition flashcards, and realistic mock exams.
+            Your free study buddy for the MAT 133 statistics midterm.
+          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Practice problems, memorize formulas with flashcards, and test yourself with mock exams.
+            We track your progress and show you what to focus on.
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Link href="/login">
+            <Link href="/register">
               <Button size="lg" className="w-full sm:w-auto">
-                Get Started
+                Start Studying - It&apos;s Free
               </Button>
             </Link>
-            <Link href="/register">
+            <Link href="/login">
               <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                Create Account
+                I Already Have an Account
               </Button>
             </Link>
           </div>
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="mb-4 text-center text-3xl font-bold">How It Works</h2>
+        <p className="mb-12 text-center text-muted-foreground max-w-2xl mx-auto">
+          Three simple steps to better grades
+        </p>
+        <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto">
+          <div className="text-center space-y-3">
+            <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto">1</div>
+            <h3 className="font-semibold text-lg">Pick a Topic</h3>
+            <p className="text-sm text-muted-foreground">Choose what you want to study - like probability, z-scores, or regression</p>
+          </div>
+          <div className="text-center space-y-3">
+            <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto">2</div>
+            <h3 className="font-semibold text-lg">Practice & Learn</h3>
+            <p className="text-sm text-muted-foreground">Solve problems and see step-by-step solutions when you need help</p>
+          </div>
+          <div className="text-center space-y-3">
+            <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto">3</div>
+            <h3 className="font-semibold text-lg">Track Progress</h3>
+            <p className="text-sm text-muted-foreground">See your accuracy improve and know exactly what to review</p>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="mb-12 text-center text-3xl font-bold">Everything You Need to Ace Your Midterm</h2>
+        <h2 className="mb-4 text-center text-3xl font-bold">Everything You Need</h2>
+        <p className="mb-12 text-center text-muted-foreground">All the tools to help you succeed</p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
               <Target className="h-10 w-10 text-primary mb-2" />
-              <CardTitle>Targeted Practice</CardTitle>
+              <CardTitle>Practice Problems</CardTitle>
               <CardDescription>
-                Focus on specific topics like normal distribution, regression, or binomial probability
+                165+ multiple choice questions across 11 topics
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Choose your module and difficulty level. Get instant feedback with step-by-step solutions.
+                Pick any answer and instantly see if you&apos;re right. Wrong? No problem - we&apos;ll show you exactly how to solve it step by step.
               </p>
             </CardContent>
           </Card>
@@ -63,14 +93,14 @@ export default function HomePage() {
           <Card>
             <CardHeader>
               <Brain className="h-10 w-10 text-primary mb-2" />
-              <CardTitle>Smart Flashcards</CardTitle>
+              <CardTitle>Flashcards</CardTitle>
               <CardDescription>
-                Spaced repetition system (SM-2) for efficient memorization
+                Memorize formulas the smart way
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Learn formulas, definitions, and rules. Cards you struggle with appear more often.
+                Our flashcards focus on what you need to know. Cards you get wrong will show up more often until you master them.
               </p>
             </CardContent>
           </Card>
@@ -80,12 +110,12 @@ export default function HomePage() {
               <Trophy className="h-10 w-10 text-primary mb-2" />
               <CardTitle>Mock Exams</CardTitle>
               <CardDescription>
-                30-question timed exams that simulate the real thing
+                Practice under real exam conditions
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Track your progress, identify weak areas, and build exam confidence.
+                Take a 30-question timed test just like the real thing. See your score and which topics need more work.
               </p>
             </CardContent>
           </Card>
@@ -93,14 +123,14 @@ export default function HomePage() {
           <Card>
             <CardHeader>
               <Calculator className="h-10 w-10 text-primary mb-2" />
-              <CardTitle>StatCrunch Calculator</CardTitle>
+              <CardTitle>Calculator</CardTitle>
               <CardDescription>
                 Built-in binomial probability calculator
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Calculate PMF, CDF, and ranges. See formulas and step-by-step computations.
+                Type in your numbers and get the answer. We&apos;ll even show you the formula and steps so you understand how it works.
               </p>
             </CardContent>
           </Card>
@@ -108,14 +138,14 @@ export default function HomePage() {
           <Card>
             <CardHeader>
               <BarChart3 className="h-10 w-10 text-primary mb-2" />
-              <CardTitle>Progress Tracking</CardTitle>
+              <CardTitle>Progress Dashboard</CardTitle>
               <CardDescription>
-                Visual dashboard showing your mastery of each topic
+                See how you&apos;re doing at a glance
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                See accuracy rates, time per question, and areas that need more work.
+                Your dashboard shows your accuracy for each topic. Green means you&apos;ve got it, red means keep practicing.
               </p>
             </CardContent>
           </Card>
@@ -123,16 +153,16 @@ export default function HomePage() {
           <Card>
             <CardHeader>
               <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mb-2">
-                15+
+                100%
               </div>
-              <CardTitle>Rich Question Bank</CardTitle>
+              <CardTitle>Completely Free</CardTitle>
               <CardDescription>
-                Curated questions plus randomly generated problems
+                No payment, no ads, no catch
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                15+ questions per module, plus unlimited generated variations for endless practice.
+                This app was made to help students. Create an account and start studying right away. Everything is free forever.
               </p>
             </CardContent>
           </Card>
@@ -141,14 +171,15 @@ export default function HomePage() {
 
       {/* Topics Section */}
       <section className="container mx-auto px-4 py-16 bg-muted/30 rounded-lg">
-        <h2 className="mb-8 text-center text-3xl font-bold">Covers All MAT 133 Topics</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <h2 className="mb-4 text-center text-3xl font-bold">All 11 MAT 133 Topics Covered</h2>
+        <p className="mb-8 text-center text-muted-foreground">Every topic from your syllabus, with practice problems and flashcards</p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
           {[
             "Graphs & Data Displays",
             "Distribution Shape",
             "Frequency Tables & Grouped Data",
             "Quartiles, IQR & Outliers",
-            "Normal Distribution",
+            "Normal Distribution & Z-Scores",
             "Regression & Correlation",
             "Probability Basics",
             "Contingency Tables",
@@ -156,8 +187,8 @@ export default function HomePage() {
             "Expected Value & House Edge",
             "Binomial Distribution",
           ].map((topic) => (
-            <div key={topic} className="flex items-center gap-2 text-sm">
-              <div className="h-2 w-2 rounded-full bg-primary" />
+            <div key={topic} className="flex items-center gap-3 text-sm bg-background p-3 rounded-lg">
+              <div className="h-2 w-2 rounded-full bg-green-500 flex-shrink-0" />
               {topic}
             </div>
           ))}
@@ -166,13 +197,14 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-16 text-center">
-        <h2 className="mb-4 text-3xl font-bold">Ready to Start Studying?</h2>
-        <p className="mb-8 text-muted-foreground">
-          Create a free account and begin mastering statistics today.
+        <h2 className="mb-4 text-3xl font-bold">Ready to Ace Your Midterm?</h2>
+        <p className="mb-8 text-muted-foreground max-w-xl mx-auto">
+          Join other MAT 133 students who are using this app to study smarter.
+          Create your free account in 30 seconds.
         </p>
         <Link href="/register">
           <Button size="lg">
-            Create Free Account
+            Start Studying Now
           </Button>
         </Link>
       </section>

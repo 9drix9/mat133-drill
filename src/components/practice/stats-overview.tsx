@@ -20,30 +20,39 @@ export function StatsOverview({
 }: StatsOverviewProps) {
   const stats = [
     {
-      label: "Questions Attempted",
+      label: "Problems Solved",
       value: totalAttempts.toLocaleString(),
+      subtext: totalAttempts === 0 ? "Start practicing!" : "Keep it up!",
       icon: Target,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
     },
     {
-      label: "Overall Accuracy",
-      value: `${overallAccuracy}%`,
+      label: "Accuracy Rate",
+      value: totalAttempts > 0 ? `${overallAccuracy}%` : "—",
+      subtext: totalAttempts === 0
+        ? "Solve some problems first"
+        : overallAccuracy >= 80
+        ? "Excellent!"
+        : overallAccuracy >= 60
+        ? "Good progress"
+        : "Keep practicing",
       icon: CheckCircle,
       color: "text-green-500",
       bgColor: "bg-green-500/10",
     },
     {
-      label: "Flashcards Due",
+      label: "Flashcards to Review",
       value: totalDueCards.toLocaleString(),
+      subtext: totalDueCards === 0 ? "All caught up!" : "Ready to review",
       icon: Brain,
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
     },
     {
-      label: "Avg Exam Score",
-      value: examCount > 0 ? `${avgExamScore}%` : "N/A",
-      subtext: examCount > 0 ? `${examCount} exams` : "No exams yet",
+      label: "Mock Exam Average",
+      value: examCount > 0 ? `${avgExamScore}%` : "—",
+      subtext: examCount > 0 ? `Based on ${examCount} exam${examCount > 1 ? 's' : ''}` : "Take an exam to see your score",
       icon: ClipboardList,
       color: "text-orange-500",
       bgColor: "bg-orange-500/10",

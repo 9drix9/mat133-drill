@@ -34,9 +34,16 @@ export default function PracticePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Practice</h1>
+        <h1 className="text-3xl font-bold">Practice Problems</h1>
         <p className="text-muted-foreground">
-          Choose a module to start targeted practice
+          Pick a topic below to start practicing. Each topic has 15+ questions.
+        </p>
+      </div>
+
+      {/* Quick tips */}
+      <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+        <p className="text-sm text-blue-800 dark:text-blue-200">
+          <strong>Tip:</strong> Start with topics you find hardest. If you get stuck, click &quot;Hint&quot; to see the solution step by step. Don&apos;t worry about mistakes - that&apos;s how you learn!
         </p>
       </div>
 

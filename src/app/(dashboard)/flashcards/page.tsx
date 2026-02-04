@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,7 +14,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MODULES, FlashcardWithState } from "@/types";
-import { getQualityDescription, getNextReviewText } from "@/lib/sm2";
 import {
   ArrowLeft,
   ArrowRight,
@@ -153,7 +152,7 @@ export default function FlashcardsPage() {
             Flashcards
           </h1>
           <p className="text-muted-foreground">
-            Spaced repetition for better retention
+            Memorize formulas and key concepts
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -193,20 +192,31 @@ export default function FlashcardsPage() {
         </div>
       )}
 
+      {/* Quick tips for new users */}
+      {flashcards.length > 0 && stats.reviewed === 0 && (
+        <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+          <p className="text-sm text-blue-800 dark:text-blue-200">
+            <strong>How flashcards work:</strong> Click the card to see the answer. Then rate how well you knew it (0 = forgot completely, 5 = knew it instantly). Cards you struggle with will appear more often until you master them.
+          </p>
+        </div>
+      )}
+
       {/* No cards message */}
       {flashcards.length === 0 && (
         <Card>
           <CardContent className="p-12 text-center">
             <Brain className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h2 className="text-xl font-bold mb-2">No Cards Due</h2>
+            <h2 className="text-xl font-bold mb-2">
+              {dueOnly ? "All Caught Up!" : "No Cards Found"}
+            </h2>
             <p className="text-muted-foreground mb-4">
               {dueOnly
-                ? "Great job! You've reviewed all due cards. Check back later."
+                ? "You've reviewed all the flashcards that are due. Come back tomorrow for more review!"
                 : "No flashcards found for this module."}
             </p>
             {dueOnly && (
               <Button onClick={() => setDueOnly(false)}>
-                Show All Cards
+                Practice All Cards Anyway
               </Button>
             )}
           </CardContent>
@@ -255,43 +265,40 @@ export default function FlashcardsPage() {
           {/* Rating buttons (only show after flip) */}
           {flipped && (
             <div className="space-y-4">
-              <p className="text-center text-sm text-muted-foreground">
-                How well did you know this?
+              <p className="text-center text-sm font-medium">
+                Did you know the answer?
               </p>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                {[0, 1, 2, 3, 4, 5].map((quality) => (
-                  <Button
-                    key={quality}
-                    variant={quality >= 3 ? "outline" : "secondary"}
-                    className={`flex-col h-auto py-3 ${
-                      quality === 5
-                        ? "border-green-500 text-green-600 hover:bg-green-50"
-                        : quality === 0
-                        ? "border-red-500 text-red-600 hover:bg-red-50"
-                        : ""
-                    }`}
-                    onClick={() => rateCard(quality)}
-                  >
-                    <span className="text-lg font-bold">{quality}</span>
-                    <span className="text-[10px] leading-tight">
-                      {quality === 0
-                        ? "Blackout"
-                        : quality === 1
-                        ? "Wrong"
-                        : quality === 2
-                        ? "Hard"
-                        : quality === 3
-                        ? "OK"
-                        : quality === 4
-                        ? "Good"
-                        : "Easy"}
-                    </span>
-                  </Button>
-                ))}
+              <div className="grid grid-cols-3 gap-2">
+                <Button
+                  variant="outline"
+                  className="flex-col h-auto py-4 border-red-300 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-950"
+                  onClick={() => rateCard(1)}
+                >
+                  <X className="h-5 w-5 mb-1" />
+                  <span className="text-sm font-semibold">Didn&apos;t Know</span>
+                  <span className="text-[10px] text-muted-foreground">Show again soon</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-col h-auto py-4 border-yellow-300 text-yellow-600 hover:bg-yellow-50 dark:border-yellow-700 dark:text-yellow-400 dark:hover:bg-yellow-950"
+                  onClick={() => rateCard(3)}
+                >
+                  <span className="text-xl mb-1">😐</span>
+                  <span className="text-sm font-semibold">Kind Of</span>
+                  <span className="text-[10px] text-muted-foreground">Had to think</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-col h-auto py-4 border-green-300 text-green-600 hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-950"
+                  onClick={() => rateCard(5)}
+                >
+                  <Check className="h-5 w-5 mb-1" />
+                  <span className="text-sm font-semibold">Knew It!</span>
+                  <span className="text-[10px] text-muted-foreground">Show less often</span>
+                </Button>
               </div>
               <p className="text-center text-xs text-muted-foreground">
-                {getQualityDescription(3)} → {getNextReviewText(1)}
-                <span className="hidden sm:inline"> • Press 0-5 to rate</span>
+                Keyboard: 1 = Didn&apos;t know, 3 = Kind of, 5 = Knew it
               </p>
             </div>
           )}
@@ -338,14 +345,17 @@ export default function FlashcardsPage() {
         <Card>
           <CardContent className="p-8 text-center">
             <Check className="h-12 w-12 mx-auto text-green-500 mb-4" />
-            <h2 className="text-xl font-bold mb-2">Session Complete!</h2>
+            <h2 className="text-xl font-bold mb-2">Nice Work!</h2>
             <p className="text-muted-foreground mb-4">
-              You reviewed {stats.total} cards.
+              You reviewed all {stats.total} flashcards. The ones you struggled with will show up again next time.
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
               <Button onClick={loadFlashcards}>
                 <RotateCcw className="h-4 w-4 mr-2" />
-                Start Over
+                Review Again
+              </Button>
+              <Button variant="outline" onClick={() => window.location.href = "/practice"}>
+                Practice Problems
               </Button>
             </div>
           </CardContent>

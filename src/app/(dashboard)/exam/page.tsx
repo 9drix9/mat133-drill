@@ -141,21 +141,32 @@ export default function ExamPage() {
             Mock Exam
           </h1>
           <p className="text-muted-foreground">
-            Test your knowledge with a timed 30-question exam
+            Practice under real exam conditions
           </p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Start New Exam</CardTitle>
+            <CardTitle>Ready to Test Yourself?</CardTitle>
             <CardDescription>
-              30 random questions across all modules
+              30 questions from all topics, just like the real midterm
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* What to expect */}
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+              <p className="font-medium text-sm">What to expect:</p>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• 30 multiple choice questions</li>
+                <li>• Questions from all 11 topics</li>
+                <li>• Timer counts down (you choose how long)</li>
+                <li>• See your score and review wrong answers at the end</li>
+              </ul>
+            </div>
+
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Time Limit: {timeLimit} minutes</Label>
+                <Label>How much time do you want? <span className="font-bold">{timeLimit} minutes</span></Label>
                 <Slider
                   value={[timeLimit]}
                   onValueChange={([v]) => setTimeLimit(v)}
@@ -164,11 +175,11 @@ export default function ExamPage() {
                   step={5}
                 />
                 <p className="text-xs text-muted-foreground">
-                  {timeLimit === 60 ? "Standard exam time" : ""}
+                  {timeLimit === 60 ? "(Recommended: matches typical exam time)" : timeLimit < 45 ? "(Challenge mode!)" : ""}
                 </p>
               </div>
             </div>
-            <Button onClick={startExam} disabled={loading} className="w-full">
+            <Button onClick={startExam} disabled={loading} className="w-full" size="lg">
               {loading ? (
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
               ) : (
@@ -359,6 +370,10 @@ export default function ExamPage() {
       return acc;
     }, {} as Record<string, { correct: number; total: number }>);
 
+    // Find weakest topic
+    const weakestTopic = Object.entries(moduleStats)
+      .sort((a, b) => (a[1].correct / a[1].total) - (b[1].correct / b[1].total))[0];
+
     return (
       <div className="max-w-3xl mx-auto space-y-6">
         <Card>
@@ -366,50 +381,61 @@ export default function ExamPage() {
             <div
               className={`inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 ${
                 score >= 70
-                  ? "bg-green-100"
+                  ? "bg-green-100 dark:bg-green-900"
                   : score >= 50
-                  ? "bg-yellow-100"
-                  : "bg-red-100"
+                  ? "bg-yellow-100 dark:bg-yellow-900"
+                  : "bg-red-100 dark:bg-red-900"
               }`}
             >
               <span
                 className={`text-3xl font-bold ${
                   score >= 70
-                    ? "text-green-600"
+                    ? "text-green-600 dark:text-green-400"
                     : score >= 50
-                    ? "text-yellow-600"
-                    : "text-red-600"
+                    ? "text-yellow-600 dark:text-yellow-400"
+                    : "text-red-600 dark:text-red-400"
                 }`}
               >
                 {Math.round(score)}%
               </span>
             </div>
             <h1 className="text-2xl font-bold mb-2">
-              {score >= 70 ? "Great Job!" : score >= 50 ? "Keep Practicing!" : "Need More Study"}
+              {score >= 80 ? "Excellent! You're Ready!" : score >= 70 ? "Great Job!" : score >= 50 ? "Good Effort - Keep Going!" : "Don't Give Up!"}
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-4">
               You got {correctCount} out of {results.length} questions correct
             </p>
+            {score < 70 && weakestTopic && (
+              <div className="inline-block bg-muted rounded-lg px-4 py-2 text-sm">
+                <strong>Tip:</strong> Focus on <span className="text-primary">{weakestTopic[0]}</span> — you got {weakestTopic[1].correct}/{weakestTopic[1].total} in that topic
+              </div>
+            )}
           </CardContent>
         </Card>
 
         {/* Module Breakdown */}
         <Card>
           <CardHeader>
-            <CardTitle>Performance by Module</CardTitle>
+            <CardTitle>How You Did by Topic</CardTitle>
+            <CardDescription>Topics are sorted from weakest to strongest</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {Object.entries(moduleStats)
                 .sort((a, b) => (a[1].correct / a[1].total) - (b[1].correct / b[1].total))
-                .map(([module, stats]) => {
+                .map(([module, stats], index) => {
                   const pct = Math.round((stats.correct / stats.total) * 100);
+                  const isWeakest = index === 0 && pct < 70;
                   return (
-                    <div key={module} className="space-y-2">
+                    <div key={module} className={`space-y-2 ${isWeakest ? 'bg-red-50 dark:bg-red-950 p-3 rounded-lg -mx-3' : ''}`}>
                       <div className="flex justify-between text-sm">
-                        <span>{module}</span>
-                        <span>
-                          {stats.correct}/{stats.total} ({pct}%)
+                        <span className="flex items-center gap-2">
+                          {module}
+                          {isWeakest && <span className="text-xs bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 px-2 py-0.5 rounded">Focus here</span>}
+                        </span>
+                        <span className="font-medium">
+                          {stats.correct}/{stats.total}
+                          <span className={pct >= 70 ? 'text-green-600' : pct >= 50 ? 'text-yellow-600' : 'text-red-600'}> ({pct}%)</span>
                         </span>
                       </div>
                       <Progress
@@ -475,11 +501,16 @@ export default function ExamPage() {
           </CardContent>
         </Card>
 
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-3">
           <Button onClick={() => setMode("start")}>
             <RefreshCw className="h-4 w-4 mr-2" />
             Take Another Exam
           </Button>
+          {score < 70 && weakestTopic && (
+            <Button variant="outline" onClick={() => router.push(`/practice/${weakestTopic[0]}`)}>
+              Practice {weakestTopic[0]}
+            </Button>
+          )}
           <Button variant="outline" onClick={() => router.push("/dashboard")}>
             Back to Dashboard
           </Button>

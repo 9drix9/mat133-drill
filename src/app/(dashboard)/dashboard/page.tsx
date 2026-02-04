@@ -59,14 +59,51 @@ export default async function DashboardPage() {
 
   const totalDueCards = flashcardStates.length;
 
+  // Check if user is new (no attempts yet)
+  const isNewUser = totalAttempts === 0;
+
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold">Skills Map</h1>
+        <h1 className="text-3xl font-bold">
+          {isNewUser ? `Welcome, ${user.username}!` : "Your Progress"}
+        </h1>
         <p className="text-muted-foreground">
-          Track your progress across all statistics topics
+          {isNewUser
+            ? "Ready to start studying? Pick any topic below to begin!"
+            : "Track your progress across all statistics topics"}
         </p>
       </div>
+
+      {/* Getting started guide for new users */}
+      {isNewUser && (
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+          <h2 className="font-semibold text-lg mb-3">How to Get Started</h2>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="flex gap-3">
+              <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center flex-shrink-0 font-bold">1</div>
+              <div>
+                <p className="font-medium">Practice Problems</p>
+                <p className="text-sm text-muted-foreground">Pick a topic and solve questions. We&apos;ll show you solutions when you need help.</p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <div className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center flex-shrink-0 font-bold">2</div>
+              <div>
+                <p className="font-medium">Review Flashcards</p>
+                <p className="text-sm text-muted-foreground">Memorize formulas and key concepts with our smart flashcard system.</p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 font-bold">3</div>
+              <div>
+                <p className="font-medium">Take Mock Exams</p>
+                <p className="text-sm text-muted-foreground">Test yourself with timed 30-question exams when you feel ready.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <StatsOverview
         totalAttempts={totalAttempts}

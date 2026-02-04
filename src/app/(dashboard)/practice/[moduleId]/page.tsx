@@ -340,25 +340,37 @@ export default function PracticeSessionPage() {
               <div
                 className={`p-4 rounded-lg ${
                   isCorrect
-                    ? "bg-green-50 border border-green-200"
-                    : "bg-red-50 border border-red-200"
+                    ? "bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800"
+                    : "bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800"
                 }`}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-start gap-3">
                   {isCorrect ? (
                     <>
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                      <span className="font-medium text-green-700">
-                        Correct!
-                      </span>
+                      <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-green-700 dark:text-green-300 text-lg">
+                          Correct! Great job!
+                        </span>
+                        <p className="text-sm text-green-600 dark:text-green-400 mt-1">
+                          You&apos;re getting the hang of this. Keep it up!
+                        </p>
+                      </div>
                     </>
                   ) : (
                     <>
-                      <XCircle className="h-5 w-5 text-red-600" />
-                      <span className="font-medium text-red-700">
-                        Incorrect. The correct answer is:{" "}
-                        {currentQuestion.correctAnswer}
-                      </span>
+                      <XCircle className="h-6 w-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-red-700 dark:text-red-300">
+                          Not quite right
+                        </span>
+                        <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                          The correct answer is: <strong>{currentQuestion.correctAnswer}</strong>
+                        </p>
+                        <p className="text-xs text-red-500 dark:text-red-500 mt-2">
+                          Don&apos;t worry - click &quot;Show Full Solution&quot; below to see how to solve it, then try a similar problem!
+                        </p>
+                      </div>
                     </>
                   )}
                 </div>
@@ -367,18 +379,23 @@ export default function PracticeSessionPage() {
 
             {/* Hints / Solution Steps */}
             {revealedSteps > 0 && (
-              <div className="space-y-2 p-4 bg-muted rounded-lg">
-                <div className="flex items-center gap-2 text-sm font-medium">
-                  <Lightbulb className="h-4 w-4 text-yellow-500" />
-                  Solution Steps
+              <div className="space-y-3 p-4 bg-yellow-50 dark:bg-yellow-950 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                <div className="flex items-center gap-2 text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                  <Lightbulb className="h-4 w-4" />
+                  Here&apos;s How to Solve It:
                 </div>
                 {currentQuestion.solutionSteps
                   .slice(0, revealedSteps)
                   .map((step, i) => (
-                    <p key={i} className="text-sm pl-6">
-                      {i + 1}. {step}
+                    <p key={i} className="text-sm pl-6 text-yellow-900 dark:text-yellow-100">
+                      <span className="font-semibold">Step {i + 1}:</span> {step}
                     </p>
                   ))}
+                {revealedSteps < currentQuestion.solutionSteps.length && (
+                  <p className="text-xs text-yellow-600 dark:text-yellow-400 pl-6 italic">
+                    Click &quot;Need a Hint?&quot; to see the next step...
+                  </p>
+                )}
               </div>
             )}
 
@@ -387,7 +404,7 @@ export default function PracticeSessionPage() {
               {isCorrect === null ? (
                 <>
                   <Button onClick={handleCheckAnswer} disabled={!userAnswer.trim()}>
-                    Check Answer
+                    Check My Answer
                   </Button>
                   <Button
                     variant="outline"
@@ -395,9 +412,10 @@ export default function PracticeSessionPage() {
                     disabled={
                       revealedSteps >= currentQuestion.solutionSteps.length
                     }
+                    title="Get a hint if you're stuck"
                   >
                     <HelpCircle className="h-4 w-4 mr-2" />
-                    Hint ({revealedSteps}/{currentQuestion.solutionSteps.length})
+                    Need a Hint? ({revealedSteps}/{currentQuestion.solutionSteps.length})
                   </Button>
                   <Button
                     variant="ghost"
@@ -405,8 +423,9 @@ export default function PracticeSessionPage() {
                       setShowSolution(true);
                       setRevealedSteps(currentQuestion.solutionSteps.length);
                     }}
+                    title="See the complete solution"
                   >
-                    Show Full Solution
+                    I Give Up - Show Answer
                   </Button>
                 </>
               ) : (
@@ -443,18 +462,33 @@ export default function PracticeSessionPage() {
       {currentIndex === questions.length - 1 && isCorrect !== null && (
         <Card>
           <CardContent className="p-6 text-center">
-            <h2 className="text-xl font-bold mb-2">Practice Complete!</h2>
-            <p className="text-muted-foreground mb-4">
-              You got {stats.correct} out of {stats.total} questions correct (
-              {Math.round((stats.correct / stats.total) * 100)}%)
+            <h2 className="text-xl font-bold mb-2">
+              {Math.round((stats.correct / stats.total) * 100) >= 80
+                ? "Excellent Work!"
+                : Math.round((stats.correct / stats.total) * 100) >= 60
+                ? "Good Progress!"
+                : "Keep Practicing!"}
+            </h2>
+            <p className="text-2xl font-bold text-primary mb-2">
+              {stats.correct} / {stats.total} correct
             </p>
-            <div className="flex justify-center gap-4">
+            <p className="text-muted-foreground mb-4">
+              {Math.round((stats.correct / stats.total) * 100) >= 80
+                ? "You're doing great! Try another topic or take a mock exam."
+                : Math.round((stats.correct / stats.total) * 100) >= 60
+                ? "You're getting there! A bit more practice and you'll master this."
+                : "Don't give up! Review the flashcards for this topic, then try again."}
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
               <Button onClick={loadQuestions}>
                 <RefreshCw className="h-4 w-4 mr-2" />
-                Practice More
+                Practice This Topic Again
+              </Button>
+              <Button variant="outline" onClick={() => router.push(`/flashcards?module=${moduleId}`)}>
+                Review Flashcards
               </Button>
               <Button variant="outline" onClick={() => router.push("/practice")}>
-                Choose Different Module
+                Try a Different Topic
               </Button>
             </div>
           </CardContent>

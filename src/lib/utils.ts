@@ -38,10 +38,13 @@ export function binomialCDF(n: number, p: number, k: number): number {
 }
 
 export function mean(data: number[]): number {
+  if (data.length === 0) return 0;
   return data.reduce((a, b) => a + b, 0) / data.length;
 }
 
 export function standardDeviation(data: number[], population = false): number {
+  if (data.length === 0) return 0;
+  if (data.length === 1) return 0;
   const avg = mean(data);
   const squaredDiffs = data.map(x => Math.pow(x - avg, 2));
   const divisor = population ? data.length : data.length - 1;

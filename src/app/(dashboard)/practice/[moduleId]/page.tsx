@@ -19,6 +19,7 @@ import {
 import { MODULES, Question } from "@/types";
 import { checkAnswer as checkAnswerUtil } from "@/lib/answer-checker";
 import {
+  AlertCircle,
   ArrowLeft,
   ArrowRight,
   BookOpen,
@@ -57,6 +58,7 @@ export default function PracticeSessionPage() {
   const [revealedSteps, setRevealedSteps] = useState(0);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [questionCount, setQuestionCount] = useState("10");
   const [useGenerator, setUseGenerator] = useState(false);
   const [stats, setStats] = useState({ correct: 0, total: 0 });
@@ -71,6 +73,7 @@ export default function PracticeSessionPage() {
 
   const loadQuestions = async () => {
     setLoading(true);
+    setError(null);
     try {
       if (useGenerator) {
         const res = await fetch("/api/questions/generate", {
@@ -82,12 +85,22 @@ export default function PracticeSessionPage() {
           }),
         });
         const data = await res.json();
+        if (!res.ok) {
+          setError(data.error || "Failed to generate questions");
+          setQuestions([]);
+          return;
+        }
         setQuestions(data.questions || []);
       } else {
         const res = await fetch(
           `/api/questions?module=${moduleId}&limit=${questionCount}`
         );
         const data = await res.json();
+        if (!res.ok) {
+          setError(data.error || "Failed to load questions");
+          setQuestions([]);
+          return;
+        }
         setQuestions(data.questions || []);
       }
       setCurrentIndex(0);
@@ -97,8 +110,10 @@ export default function PracticeSessionPage() {
       setIsCorrect(null);
       setStats({ correct: 0, total: 0 });
       setStartTime(Date.now());
-    } catch (error) {
-      console.error("Failed to load questions:", error);
+    } catch (err) {
+      console.error("Failed to load questions:", err);
+      setError("Something went wrong. Please try again.");
+      setQuestions([]);
     } finally {
       setLoading(false);
     }
@@ -194,6 +209,25 @@ export default function PracticeSessionPage() {
     return (
       <div className="flex items-center justify-center py-12">
         <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12 space-y-4">
+        <AlertCircle className="h-12 w-12 mx-auto text-red-500" />
+        <h1 className="text-2xl font-bold">Something went wrong</h1>
+        <p className="text-muted-foreground">{error}</p>
+        <div className="flex justify-center gap-4">
+          <Button onClick={loadQuestions}>
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Try Again
+          </Button>
+          <Button variant="outline" onClick={() => router.push("/practice")}>
+            Back to Practice
+          </Button>
+        </div>
       </div>
     );
   }

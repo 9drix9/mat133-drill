@@ -42,9 +42,15 @@ export function DashboardNav({ user }: { user: User }) {
   const handleLogout = async () => {
     if (loggingOut) return;
     setLoggingOut(true);
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
-    router.refresh();
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      router.push("/login");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Still redirect to login even if API fails - cookie will expire anyway
+      router.push("/login");
+    }
   };
 
   return (

@@ -43,6 +43,7 @@ export default function ExamPage() {
   const [timeLimit, setTimeLimit] = useState(60);
   const [results, setResults] = useState<{ isCorrect: boolean; correctAnswer: string; moduleTag: string }[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [pastExams, setPastExams] = useState<ExamSession[]>([]);
 
   useEffect(() => {
@@ -77,6 +78,7 @@ export default function ExamPage() {
 
   const startExam = async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await fetch("/api/exam", {
         method: "POST",
@@ -84,14 +86,19 @@ export default function ExamPage() {
         body: JSON.stringify({ action: "start", timeLimit }),
       });
       const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Failed to start exam. Please try again.");
+        return;
+      }
       setSession(data.session);
       setQuestions(data.questions);
       setAnswers({});
       setCurrentIndex(0);
       setTimeRemaining(timeLimit * 60);
       setMode("exam");
-    } catch (error) {
-      console.error("Failed to start exam:", error);
+    } catch (err) {
+      console.error("Failed to start exam:", err);
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -179,6 +186,11 @@ export default function ExamPage() {
                 </p>
               </div>
             </div>
+            {error && (
+              <div className="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 p-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
             <Button onClick={startExam} disabled={loading} className="w-full" size="lg">
               {loading ? (
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />

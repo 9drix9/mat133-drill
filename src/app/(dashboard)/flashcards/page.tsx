@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +26,7 @@ import {
 
 export default function FlashcardsPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const initialModule = searchParams.get("module") || "all";
 
   const [flashcards, setFlashcards] = useState<FlashcardWithState[]>([]);
@@ -354,7 +355,7 @@ export default function FlashcardsPage() {
                 <RotateCcw className="h-4 w-4 mr-2" />
                 Review Again
               </Button>
-              <Button variant="outline" onClick={() => window.location.href = "/practice"}>
+              <Button variant="outline" onClick={() => router.push("/practice")}>
                 Practice Problems
               </Button>
             </div>

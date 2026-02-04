@@ -1,0 +1,625 @@
+[
+  {
+    "id": "fc-gd-001",
+    "moduleTag": "graphs-data",
+    "front": "How do I know when to use a histogram vs. a bar chart?",
+    "back": "Ask: Is my data numerical or categorical?\n\n• HISTOGRAM: Numerical data (ages, weights, scores)\n  - Bars touch (continuous data)\n  - X-axis has numbers\n\n• BAR CHART: Categorical data (colors, majors, brands)\n  - Bars have gaps\n  - X-axis has category names",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-gd-002",
+    "moduleTag": "graphs-data",
+    "front": "What makes a Pareto chart special?",
+    "back": "Bars are arranged in DESCENDING ORDER (tallest to shortest)\n\nExample: Customer complaints\n- Shipping: 45 (first)\n- Quality: 30 (second)\n- Service: 15 (third)\n\nUsed to identify the \"vital few\" problems to fix first.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-gd-003",
+    "moduleTag": "graphs-data",
+    "front": "In a boxplot, what does the box show?",
+    "back": "The box shows the middle 50% of data (IQR)\n\n• Left edge = Q1 (25th percentile)\n• Line inside = Median (50th percentile)\n• Right edge = Q3 (75th percentile)\n\nThe whiskers extend to the smallest/largest non-outlier values.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-gd-004",
+    "moduleTag": "graphs-data",
+    "front": "How do I calculate class width from a histogram?",
+    "back": "Class Width = Upper Limit − Lower Limit\n\nExample: Classes are 60-70, 70-80, 80-90\nClass width = 70 − 60 = 10\n\nAll classes in a histogram have the SAME width.",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-gd-005",
+    "moduleTag": "graphs-data",
+    "front": "When should I use a time-series graph?",
+    "back": "Use when showing how something changes OVER TIME\n\nExamples:\n• Stock prices over a year\n• Monthly sales\n• Temperature throughout the day\n\nX-axis = Time, Y-axis = Value being measured",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-gd-006",
+    "moduleTag": "graphs-data",
+    "front": "What is a frequency polygon and when is it useful?",
+    "back": "A line graph connecting midpoints of histogram bars.\n\nMost useful when COMPARING two or more distributions on the same graph.\n\nMultiple overlapping histograms are hard to read, but overlapping frequency polygons are clear.\n\nThe area under the curve represents total frequency.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-gd-007",
+    "moduleTag": "graphs-data",
+    "front": "How do I estimate the median from a histogram?",
+    "back": "1. Calculate total frequency (n)\n2. Find median position: (n+1)/2\n3. Count frequencies from left until you reach that position\n4. The median is in that class\n\nExample: n=50, median at position 25.5\nCount: 5+12=17 (not there), 5+12+18=35 (passed it!)\nMedian is in the third class.",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-gd-008",
+    "moduleTag": "graphs-data",
+    "front": "In a boxplot, what do the whiskers show?",
+    "back": "Whiskers extend to the most extreme values WITHIN the fences:\n\n• Lower fence = Q1 − 1.5 × IQR\n• Upper fence = Q3 + 1.5 × IQR\n\nWhiskers go to the smallest/largest data points that are NOT outliers.\n\nPoints beyond the fences are plotted individually as outliers.",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-gd-009",
+    "moduleTag": "graphs-data",
+    "front": "What two features can a time-series graph show?",
+    "back": "1. TREND: Overall long-term direction (upward, downward, flat)\n\n2. SEASONALITY: Regular patterns that repeat at fixed intervals\n\nExample: Monthly sales show:\n• Upward trend (sales growing over years)\n• Seasonality (peaks every December for holidays)",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-gd-010",
+    "moduleTag": "graphs-data",
+    "front": "How do I identify an outlier on a boxplot?",
+    "back": "Points plotted INDIVIDUALLY beyond the whiskers are outliers.\n\nIf you see a dot or asterisk beyond the whisker, that value is an outlier.\n\nTo verify: Check if value > Q3 + 1.5×IQR or value < Q1 - 1.5×IQR\n\nExample: If upper whisker ends at 72 but there's a point at 85, then 85 is an outlier.",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-gd-011",
+    "moduleTag": "graphs-data",
+    "front": "How do I determine the shape of a histogram?",
+    "back": "Look at where data clusters and where the tail extends:\n\n• SYMMETRIC: Peak in middle, similar tails on both sides\n  Pattern: low→high→low (e.g., 3,8,15,22,18,10,4)\n\n• SKEWED RIGHT: Peak on left, tail extends right\n  Pattern: high→gradually lower\n\n• SKEWED LEFT: Peak on right, tail extends left\n  Pattern: gradually higher→high",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-gd-012",
+    "moduleTag": "graphs-data",
+    "front": "What is a class midpoint in a histogram?",
+    "back": "Midpoint = (Lower Limit + Upper Limit) ÷ 2\n\nExample: Class 60-70\nMidpoint = (60 + 70) ÷ 2 = 65\n\nMidpoints are used:\n• In frequency polygons (connect the midpoint of each bar's top)\n• To estimate the mean from grouped data",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-gd-013",
+    "moduleTag": "graphs-data",
+    "front": "Which value is always shown inside the box of a boxplot?",
+    "back": "The MEDIAN (Q2) is always shown as a line inside the box.\n\nThe box shows:\n• Left edge = Q1\n• Line inside = MEDIAN\n• Right edge = Q3\n\nNote: Some boxplots also show the mean as a dot or plus sign, but the median line is always present.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-ds-001",
+    "moduleTag": "distribution-shape",
+    "front": "How do I determine skewness from mean and median?",
+    "back": "Compare mean to median:\n\n• Mean > Median → Skewed RIGHT (tail on right)\n  Example: Income data ($85K mean, $52K median)\n\n• Mean < Median → Skewed LEFT (tail on left)\n  Example: Test scores (75 mean, 82 median)\n\n• Mean ≈ Median → Symmetric",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ds-002",
+    "moduleTag": "distribution-shape",
+    "front": "What shape would ages at a retirement community have?",
+    "back": "SKEWED LEFT\n\nWhy? Most people cluster at older ages (65-85), with fewer younger people (just meeting minimum age).\n\nThe tail extends toward younger ages = LEFT skew\n\nRemember: The tail points in the direction of skew!",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ds-003",
+    "moduleTag": "distribution-shape",
+    "front": "What measures should I use for skewed data?",
+    "back": "For SKEWED data, use:\n• Center: MEDIAN (resistant to outliers)\n• Spread: IQR (resistant to outliers)\n\nFor SYMMETRIC data, use:\n• Center: MEAN\n• Spread: Standard Deviation\n\nOutliers affect mean/SD but NOT median/IQR!",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ds-004",
+    "moduleTag": "distribution-shape",
+    "front": "Can you determine the shape of categorical data?",
+    "back": "NO! Shape (skewed, symmetric) only applies to QUANTITATIVE data.\n\nCategorical data (favorite colors, car brands) doesn't have a meaningful order, so \"skewness\" makes no sense.\n\nExample: Red=25, Blue=40, Green=18\nThis is NOT skewed - it's just frequencies of categories.",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ds-005",
+    "moduleTag": "distribution-shape",
+    "front": "What shape would test scores on a very easy exam have?",
+    "back": "SKEWED LEFT (negatively skewed)\n\nMost students score high (cluster on the right), with a few low scores creating a tail to the left.\n\nSimilarly:\n• Very hard exam → Skewed RIGHT (most score low)\n• Moderate exam → Symmetric (bell-shaped)",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ds-006",
+    "moduleTag": "distribution-shape",
+    "front": "What does 'positively skewed' mean?",
+    "back": "Positively skewed = Skewed RIGHT\n\nThe tail extends toward POSITIVE (higher) values.\n\nMean is GREATER than median.\n\nExamples: Income, house prices, waiting times\n\nRemember: Positive = Right, Negative = Left",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-ds-007",
+    "moduleTag": "distribution-shape",
+    "front": "In a skewed right distribution, what's the order of mean, median, mode?",
+    "back": "Mode < Median < Mean\n\n(Read left to right, like the tail direction)\n\nThe mean gets \"pulled\" toward the tail.\n\nFor skewed LEFT:\nMean < Median < Mode",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ds-008",
+    "moduleTag": "distribution-shape",
+    "front": "What distribution shape do SAT scores follow?",
+    "back": "SYMMETRIC (approximately normal)\n\nSAT scores are designed to follow a bell curve with:\n• Mean ≈ Median ≈ Mode\n• Most scores near the middle\n• Fewer scores at extremes\n• μ ≈ 500, σ ≈ 100 for each section",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ft-001",
+    "moduleTag": "frequency-tables",
+    "front": "How do I calculate relative frequency?",
+    "back": "Relative Frequency = Class Frequency ÷ Total\n\nExample:\nClass 70-80 has 15 students, total = 50 students\nRelative freq = 15/50 = 0.30 or 30%\n\nAll relative frequencies must sum to 1 (or 100%).",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ft-002",
+    "moduleTag": "frequency-tables",
+    "front": "What is cumulative frequency?",
+    "back": "Running total of frequencies up to that class\n\nExample:\nClass | Freq | Cumulative\n0-10  |  5   |    5\n10-20 |  8   |   13  (5+8)\n20-30 | 12   |   25  (13+12)\n\nUsed to answer \"how many at or below X?\"",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-ft-003",
+    "moduleTag": "frequency-tables",
+    "front": "How do I find the mean from grouped data?",
+    "back": "x̄ = Σ(f × m) ÷ Σf\n\nSteps:\n1. Find midpoint of each class: m = (lower + upper)/2\n2. Multiply: frequency × midpoint\n3. Sum all (f × m)\n4. Divide by total frequency\n\nThis gives an APPROXIMATION of the true mean.",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ft-004",
+    "moduleTag": "frequency-tables",
+    "front": "How do I find the class midpoint?",
+    "back": "Midpoint = (Lower Limit + Upper Limit) ÷ 2\n\nExample:\nClass 20-30:\nMidpoint = (20 + 30) ÷ 2 = 25\n\nClass 45-55:\nMidpoint = (45 + 55) ÷ 2 = 50",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ft-005",
+    "moduleTag": "frequency-tables",
+    "front": "What's the difference between class limits and class boundaries?",
+    "back": "CLASS LIMITS: The actual values defining the class\nExample: 10-19, 20-29\n\nCLASS BOUNDARIES: Adjusted to close gaps between classes\nExample: 9.5-19.5, 19.5-29.5\n\nBoundaries are used for continuous data to avoid gaps.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-ft-006",
+    "moduleTag": "frequency-tables",
+    "front": "How do I calculate class width when creating classes?",
+    "back": "Class Width = (Max − Min) ÷ Number of Classes\n\nAlways ROUND UP!\n\nExample: Data from 23 to 87, want 6 classes\nWidth = (87 − 23) ÷ 6 = 10.67 → Round up to 11\n\nUse classes: 23-33, 34-44, 45-55, etc.",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ft-007",
+    "moduleTag": "frequency-tables",
+    "front": "What is Sturges' Rule for number of classes?",
+    "back": "Number of classes ≈ 1 + 3.322 × log₁₀(n)\n\nOr roughly: k ≈ 1 + log₂(n)\n\nExample: n = 50 data points\nk ≈ 1 + 3.322 × log₁₀(50)\nk ≈ 1 + 3.322 × 1.7 ≈ 6.6 → Use 6 or 7 classes",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ft-008",
+    "moduleTag": "frequency-tables",
+    "front": "What is cumulative relative frequency?",
+    "back": "Running total of relative frequencies\n\nExample:\nClass | Rel.Freq | Cum.Rel.Freq\nA     |  0.20    |   0.20\nB     |  0.35    |   0.55  (0.20+0.35)\nC     |  0.45    |   1.00  (0.55+0.45)\n\nLast value must equal 1.00 (or 100%)",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-ft-009",
+    "moduleTag": "frequency-tables",
+    "front": "How do I find standard deviation from grouped data?",
+    "back": "s = √[Σf(m − x̄)² ÷ (n − 1)]\n\nSteps:\n1. Calculate mean x̄ from grouped data\n2. For each class: (midpoint − mean)²\n3. Multiply by frequency: f × (m − x̄)²\n4. Sum all, divide by (n−1), take square root\n\nThis is an approximation!",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ft-010",
+    "moduleTag": "frequency-tables",
+    "front": "How do I find which class contains the median?",
+    "back": "1. Find n/2 (median position)\n2. Use cumulative frequencies\n3. Median is in the first class where cumulative freq ≥ n/2\n\nExample: n=40, median at position 20\nCum.Freq: 12, 30, 40\nMedian is in class 2 (first class where cum.freq ≥ 20)",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-qi-001",
+    "moduleTag": "quartiles-iqr",
+    "front": "How do I find Q1, Q2, Q3?",
+    "back": "1. Sort data from smallest to largest\n2. Q2 (median) = middle value\n3. Q1 = median of lower half\n4. Q3 = median of upper half\n\nExample: 2, 5, 7, 8, 12, 15, 19\n• Q2 = 8 (middle)\n• Q1 = 5 (median of 2,5,7)\n• Q3 = 15 (median of 12,15,19)",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-qi-002",
+    "moduleTag": "quartiles-iqr",
+    "front": "How do I calculate IQR and find outliers?",
+    "back": "IQR = Q3 − Q1\n\nOutlier fences:\n• Lower fence = Q1 − 1.5 × IQR\n• Upper fence = Q3 + 1.5 × IQR\n\nAny value BELOW lower fence or ABOVE upper fence is an OUTLIER.\n\nExample: Q1=25, Q3=48, IQR=23\nLower fence = 25 − 34.5 = −9.5\nUpper fence = 48 + 34.5 = 82.5",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-qi-003",
+    "moduleTag": "quartiles-iqr",
+    "front": "Five-number summary: What are the 5 numbers?",
+    "back": "1. Minimum\n2. Q1 (25th percentile)\n3. Median (Q2, 50th percentile)\n4. Q3 (75th percentile)\n5. Maximum\n\nThese 5 values are used to construct a boxplot.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-qi-004",
+    "moduleTag": "quartiles-iqr",
+    "front": "When should I use median/IQR vs mean/SD?",
+    "back": "Use MEDIAN and IQR when:\n• Data is skewed\n• Outliers are present\n• Distribution is not normal\n\nUse MEAN and SD when:\n• Data is symmetric\n• No outliers\n• Distribution is approximately normal\n\nMedian/IQR are RESISTANT to outliers!",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-qi-005",
+    "moduleTag": "quartiles-iqr",
+    "front": "If a value equals the fence exactly, is it an outlier?",
+    "back": "NO! A value must be BEYOND the fence to be an outlier.\n\nOutlier: value < lower fence OR value > upper fence\n\nA value exactly AT the fence is the most extreme non-outlier value.\n\nThe whisker in a boxplot would extend exactly to this value.",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-qi-006",
+    "moduleTag": "quartiles-iqr",
+    "front": "If I add 10 to every value, how do IQR and range change?",
+    "back": "Adding a constant to all values:\n• IQR stays the SAME\n• Range stays the SAME\n• Q1, Q2, Q3 all increase by 10\n\nMultiplying all values by a constant:\n• IQR is multiplied by that constant\n• Range is multiplied by that constant",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-qi-007",
+    "moduleTag": "quartiles-iqr",
+    "front": "What is the relationship between median and Q2?",
+    "back": "They are the SAME thing!\n\nQ2 = Median = 50th percentile\n\n\"Q2\" is just another name for the median, used in the context of quartiles.\n\nQ1 = 25th percentile\nQ2 = 50th percentile (median)\nQ3 = 75th percentile",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-qi-008",
+    "moduleTag": "quartiles-iqr",
+    "front": "How can I tell if a distribution is skewed from a boxplot?",
+    "back": "Look at the median position in the box:\n\n• Median closer to Q1 (left) → Skewed RIGHT\n• Median closer to Q3 (right) → Skewed LEFT\n• Median in center → Symmetric\n\nAlso: Longer whisker on right → Skewed right",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-nd-001",
+    "moduleTag": "normal-distribution",
+    "front": "Empirical Rule (68-95-99.7)",
+    "back": "For NORMAL distributions:\n\n• 68% of data within μ ± 1σ\n• 95% of data within μ ± 2σ\n• 99.7% of data within μ ± 3σ\n\nExample: μ=100, σ=15\n• 68% between 85-115\n• 95% between 70-130\n• 99.7% between 55-145",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-nd-002",
+    "moduleTag": "normal-distribution",
+    "front": "How do I calculate a z-score?",
+    "back": "z = (x − μ) / σ\n\nExample: Test score x=85, μ=70, σ=10\nz = (85 − 70) / 10 = 1.5\n\nMeaning: The score is 1.5 standard deviations ABOVE the mean.\n\nNegative z = below mean\nPositive z = above mean",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-nd-003",
+    "moduleTag": "normal-distribution",
+    "front": "How do I find x when I know the z-score?",
+    "back": "x = μ + z × σ\n\nExample: μ=500, σ=100, z=−1.5\nx = 500 + (−1.5)(100) = 500 − 150 = 350\n\nUseful for finding cutoff scores:\n\"What score is 2 standard deviations above the mean?\"",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-nd-004",
+    "moduleTag": "normal-distribution",
+    "front": "When is a value considered \"unusual\"?",
+    "back": "A value is UNUSUAL if |z| ≥ 2\n\nThis means more than 2 standard deviations from the mean.\n\nExample: μ=100, σ=15\n• x=70: z=(70-100)/15 = −2 → UNUSUAL (barely)\n• x=125: z=(125-100)/15 = 1.67 → NOT unusual\n• x=140: z=(140-100)/15 = 2.67 → UNUSUAL",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-nd-005",
+    "moduleTag": "normal-distribution",
+    "front": "What is the standard normal distribution?",
+    "back": "A normal distribution with:\n• Mean μ = 0\n• Standard deviation σ = 1\n\nAny normal distribution can be converted to standard normal using z-scores.\n\nZ-tables give probabilities for the standard normal distribution.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-nd-006",
+    "moduleTag": "normal-distribution",
+    "front": "What does a z-score of 0 indicate?",
+    "back": "The value equals the mean exactly.\n\nz = (x − μ) / σ = 0\n\nThis means x = μ\n\nA z-score of 0 is the most typical/average value in the distribution.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-nd-007",
+    "moduleTag": "normal-distribution",
+    "front": "How do I compare scores from different tests?",
+    "back": "Convert both to z-scores and compare!\n\nExample:\nStudent A: 85 on test with μ=80, σ=5\nz = (85-80)/5 = 1.0\n\nStudent B: 90 on test with μ=82, σ=4\nz = (90-82)/4 = 2.0\n\nStudent B performed better relative to their class (higher z).",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-nd-008",
+    "moduleTag": "normal-distribution",
+    "front": "What percentage of data falls between z = -1 and z = 1?",
+    "back": "68% (from the Empirical Rule)\n\nThis is the \"one standard deviation\" range.\n\nSimilarly:\n• Between z = -2 and z = 2: 95%\n• Between z = -3 and z = 3: 99.7%",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-rc-001",
+    "moduleTag": "regression-correlation",
+    "front": "How do I interpret the slope in ŷ = a + bx?",
+    "back": "Slope (b) = change in y for each 1-unit increase in x\n\nExample: ŷ = 15 + 2.5x (predicting sales from ads)\n\"For each additional $1000 spent on advertising, sales increase by $2,500.\"\n\n• Positive b = y increases as x increases\n• Negative b = y decreases as x increases",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-rc-002",
+    "moduleTag": "regression-correlation",
+    "front": "What does r² tell me?",
+    "back": "r² = proportion of variation in y explained by x\n\nExample: r² = 0.81\n\"81% of the variation in y is explained by the linear relationship with x.\"\n\n• r² is always between 0 and 1\n• Higher r² = better fit\n• r² = 0.81 means r = ±0.9",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-rc-003",
+    "moduleTag": "regression-correlation",
+    "front": "How do I calculate a residual?",
+    "back": "Residual = Actual − Predicted = y − ŷ\n\nExample: Actual y = 45, Predicted ŷ = 42\nResidual = 45 − 42 = +3\n\n• Positive residual: actual > predicted (underestimated)\n• Negative residual: actual < predicted (overestimated)\n• Residual = 0: perfect prediction",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-rc-004",
+    "moduleTag": "regression-correlation",
+    "front": "Interpolation vs Extrapolation: Which is risky?",
+    "back": "EXTRAPOLATION is risky!\n\nInterpolation: Predicting WITHIN the data range\n• Example: Data from x=10 to x=50, predict at x=30 ✓\n\nExtrapolation: Predicting OUTSIDE the data range\n• Example: Data from x=10 to x=50, predict at x=80 ✗\n• The relationship may not hold outside the observed range",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-rc-005",
+    "moduleTag": "regression-correlation",
+    "front": "What is a lurking variable?",
+    "back": "A variable NOT in the study that affects both x and y\n\nExample: Ice cream sales (x) and drowning deaths (y) are correlated.\nLurking variable: TEMPERATURE\n• Hot weather → more ice cream\n• Hot weather → more swimming → more drownings\n\nCorrelation ≠ Causation because of lurking variables!",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-rc-006",
+    "moduleTag": "regression-correlation",
+    "front": "What are explanatory and response variables?",
+    "back": "EXPLANATORY (x): The predictor, independent variable\n• What we use to make predictions\n• Plotted on x-axis\n\nRESPONSE (y): The outcome, dependent variable\n• What we're trying to predict\n• Plotted on y-axis\n\nExample: Height (x) predicts Weight (y)",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-rc-007",
+    "moduleTag": "regression-correlation",
+    "front": "What does correlation coefficient r tell me?",
+    "back": "r measures strength and direction of LINEAR relationship\n\n• r = 1: Perfect positive correlation\n• r = -1: Perfect negative correlation\n• r = 0: No linear correlation\n• |r| close to 1: Strong relationship\n• |r| close to 0: Weak relationship\n\nRange: -1 ≤ r ≤ 1",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-rc-008",
+    "moduleTag": "regression-correlation",
+    "front": "What does a curved residual plot indicate?",
+    "back": "A linear model is NOT appropriate!\n\nGood residual plot: Random scatter, no pattern\nBad residual plot: Curved pattern visible\n\nIf residuals show a curve, the relationship between x and y is nonlinear. Consider a different model.",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-rc-009",
+    "moduleTag": "regression-correlation",
+    "front": "If r = 0.7, what is r²? If r² = 0.64, what is r?",
+    "back": "r² = r × r\n\nIf r = 0.7: r² = 0.49\n(49% of variation explained)\n\nIf r² = 0.64: r = ±√0.64 = ±0.8\n(Need context to determine + or -)\n\nFor a positive relationship: r = +0.8",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-pb-001",
+    "moduleTag": "probability-basics",
+    "front": "What is the sample space?",
+    "back": "The set of ALL possible outcomes\n\nExamples:\n• Coin flip: S = {H, T}\n• Die roll: S = {1, 2, 3, 4, 5, 6}\n• Two coins: S = {HH, HT, TH, TT}\n\nEvery probability problem starts with identifying the sample space.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-pb-002",
+    "moduleTag": "probability-basics",
+    "front": "What is the complement rule?",
+    "back": "P(not A) = 1 − P(A)\n\nExample: P(rain) = 0.3\nP(no rain) = 1 − 0.3 = 0.7\n\nUseful shortcut:\nP(at least one) = 1 − P(none)\nP(A or B or C) = 1 − P(not A and not B and not C)",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-pb-003",
+    "moduleTag": "probability-basics",
+    "front": "Addition Rule: P(A or B) = ?",
+    "back": "P(A or B) = P(A) + P(B) − P(A and B)\n\nExample: P(King) = 4/52, P(Heart) = 13/52, P(King AND Heart) = 1/52\nP(King or Heart) = 4/52 + 13/52 − 1/52 = 16/52\n\nIf DISJOINT (can't happen together):\nP(A or B) = P(A) + P(B)",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-pb-004",
+    "moduleTag": "probability-basics",
+    "front": "Disjoint vs Independent: What's the difference?",
+    "back": "DISJOINT (Mutually Exclusive):\n• Cannot happen at the same time\n• P(A and B) = 0\n• Example: Rolling a 2 AND a 5 on one die\n\nINDEPENDENT:\n• One doesn't affect the other\n• P(A and B) = P(A) × P(B)\n• Example: Two coin flips\n\nDisjoint events are NEVER independent!",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-pb-005",
+    "moduleTag": "probability-basics",
+    "front": "Multiplication Rule for Independent Events",
+    "back": "P(A and B) = P(A) × P(B)\n\nExample: Flip coin twice\nP(Heads and Heads) = 0.5 × 0.5 = 0.25\n\nFor multiple independent events:\nP(all A) = p^n\nP(none A) = (1−p)^n\nP(at least one A) = 1 − (1−p)^n",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-pb-006",
+    "moduleTag": "probability-basics",
+    "front": "What are the three types of probability?",
+    "back": "1. CLASSICAL: P = favorable/total\n   (Equally likely outcomes, like dice or cards)\n\n2. EMPIRICAL: P = observed frequency/total trials\n   (Based on experiments or data)\n\n3. SUBJECTIVE: Personal judgment/belief\n   (\"I think there's a 70% chance of rain\")",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-pb-007",
+    "moduleTag": "probability-basics",
+    "front": "What is the probability of rolling a sum of 7 with two dice?",
+    "back": "P(sum = 7) = 6/36 = 1/6\n\nWinning combinations:\n(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\n\nTotal outcomes with two dice: 6 × 6 = 36\n\n7 is the most likely sum with two dice!",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-pb-008",
+    "moduleTag": "probability-basics",
+    "front": "Which probability values are valid?",
+    "back": "Probability must be between 0 and 1:\n0 ≤ P(A) ≤ 1\n\nValid: 0, 0.5, 0.999, 1\nInvalid: -0.1, 1.2, 150%\n\nAlso: All probabilities in a distribution must sum to 1.",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-pb-009",
+    "moduleTag": "probability-basics",
+    "front": "With vs without replacement: What's the difference?",
+    "back": "WITH replacement:\n• Put item back after selecting\n• Probabilities stay SAME\n• Events are INDEPENDENT\n\nWITHOUT replacement:\n• Don't put item back\n• Probabilities CHANGE\n• Events are DEPENDENT\n\nExample: Drawing cards from a deck",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-pb-010",
+    "moduleTag": "probability-basics",
+    "front": "If events partition the sample space, what does that mean?",
+    "back": "Events cover ALL possibilities with no overlap.\n\nIf A and B partition S:\n• P(A) + P(B) = 1\n• They are mutually exclusive\n• Together they cover everything\n\nExample: \"Pass\" and \"Fail\" partition exam results\nIf P(Pass) = 0.35, then P(Fail) = 0.65",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-ct-001",
+    "moduleTag": "contingency-tables",
+    "front": "How do I find joint probability from a table?",
+    "back": "Joint P(A and B) = cell count / grand total\n\nExample:\n           Male  Female  Total\nYes         30     45      75\nNo          20     15      35\nTotal       50     60     110\n\nP(Male AND Yes) = 30/110 = 0.273",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ct-002",
+    "moduleTag": "contingency-tables",
+    "front": "How do I find marginal probability from a table?",
+    "back": "Marginal probability = row or column total / grand total\n\nExample:\n           Male  Female  Total\nYes         30     45      75\nNo          20     15      35\nTotal       50     60     110\n\nP(Male) = 50/110 = 0.455\nP(Yes) = 75/110 = 0.682",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ct-003",
+    "moduleTag": "contingency-tables",
+    "front": "How do I find P(A or B) from a contingency table?",
+    "back": "P(A or B) = P(A) + P(B) − P(A and B)\n\nOr count: (row total + column total − cell count) / grand total\n\nExample: P(Male or Yes)\n= 50/110 + 75/110 − 30/110\n= 95/110 = 0.864",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ct-004",
+    "moduleTag": "contingency-tables",
+    "front": "When is an event considered \"unusual\"?",
+    "back": "An event is UNUSUAL if P < 0.05\n\nThis means it happens less than 5% of the time.\n\nExample:\nP(getting 10 heads in 10 flips) = 0.00098\nThis is unusual because 0.00098 < 0.05",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ct-005",
+    "moduleTag": "contingency-tables",
+    "front": "How do I find P(at least one) for independent selections?",
+    "back": "P(at least one) = 1 − P(none)\n\nExample: 30% have trait, select 4 people\nP(none) = (0.70)⁴ = 0.2401\nP(at least one) = 1 − 0.2401 = 0.7599\n\nMuch easier than P(1) + P(2) + P(3) + P(4)!",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ct-006",
+    "moduleTag": "contingency-tables",
+    "front": "How do I find P(all have trait) for independent selections?",
+    "back": "P(all) = p^n\n\nExample: 40% exercise, 5 people selected\nP(all 5 exercise) = (0.40)⁵ = 0.01024\n\nFor P(none): (1−p)^n = (0.60)⁵ = 0.07776",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-dd-001",
+    "moduleTag": "discrete-distributions",
+    "front": "What makes a valid probability distribution?",
+    "back": "Two rules:\n1. Every probability must be between 0 and 1\n   0 ≤ P(x) ≤ 1\n\n2. All probabilities must sum to 1\n   ΣP(x) = 1\n\nIf EITHER rule is violated, it's NOT valid.\n\nExample: 0.2 + 0.5 + 0.4 = 1.1 ≠ 1 → Invalid!",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-dd-002",
+    "moduleTag": "discrete-distributions",
+    "front": "How do I calculate expected value E(X)?",
+    "back": "E(X) = Σ[x × P(x)]\n\nMultiply each outcome by its probability, then sum.\n\nExample:\nx  |  1    2    3\nP  | 0.2  0.5  0.3\n\nE(X) = 1(0.2) + 2(0.5) + 3(0.3)\n     = 0.2 + 1.0 + 0.9 = 2.1",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-dd-003",
+    "moduleTag": "discrete-distributions",
+    "front": "How do I calculate variance for a discrete distribution?",
+    "back": "Var(X) = Σ[(x − μ)² × P(x)]\n\nOr use: Var(X) = E(X²) − [E(X)]²\n\nStandard deviation: σ = √Var(X)\n\nExample: If E(X)=2.1 and E(X²)=5.3\nVar(X) = 5.3 − (2.1)² = 5.3 − 4.41 = 0.89\nσ = √0.89 = 0.94",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-dd-004",
+    "moduleTag": "discrete-distributions",
+    "front": "How do I find a missing probability?",
+    "back": "Use the fact that all probabilities sum to 1.\n\nExample: P(0)=0.3, P(2)=0.5, find P(1)\nP(0) + P(1) + P(2) = 1\n0.3 + P(1) + 0.5 = 1\nP(1) = 1 − 0.3 − 0.5 = 0.2",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-dd-005",
+    "moduleTag": "discrete-distributions",
+    "front": "If E(X) = 5, what is E(2X + 3)?",
+    "back": "Use linear transformation rules:\n\nE(aX + b) = a × E(X) + b\n\nE(2X + 3) = 2 × E(X) + 3\n         = 2 × 5 + 3\n         = 13\n\nFor variance: Var(aX + b) = a² × Var(X)",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ev-001",
+    "moduleTag": "expected-value-casino",
+    "front": "How do I calculate expected profit from a bet?",
+    "back": "E(profit) = Σ(profit × probability)\n\nExample: Bet $10, win $25 with prob 0.4, lose with prob 0.6\n\nProfit if win: $25 − $10 = $15\nProfit if lose: −$10\n\nE(profit) = 15(0.4) + (−10)(0.6)\n         = 6 − 6 = $0",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ev-002",
+    "moduleTag": "expected-value-casino",
+    "front": "How do I calculate house edge?",
+    "back": "House Edge = −E(profit per $1 bet) × 100%\n\nExample: E(profit) = −$0.053 per $1 bet\nHouse Edge = −(−0.053) × 100% = 5.3%\n\nMeaning: On average, the casino keeps 5.3¢ of every $1 bet.\n\nIf E(profit) = 0, the game is FAIR.",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-ev-003",
+    "moduleTag": "expected-value-casino",
+    "front": "How does bet size affect expected profit?",
+    "back": "Expected profit scales linearly with bet size.\n\nIf E(profit) = −$0.05 per $1 bet:\n• $10 bet: E = −$0.50\n• $100 bet: E = −$5.00\n• $1000 bet: E = −$50.00\n\nFormula: E($X bet) = E($1 bet) × X",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-ev-004",
+    "moduleTag": "expected-value-casino",
+    "front": "What does it mean if a game has positive expected value?",
+    "back": "The PLAYER has the advantage!\n\nPositive E(profit) → Player wins on average\nNegative E(profit) → House wins on average (most casino games)\nE(profit) = 0 → Fair game\n\nCasinos never offer games with positive expected value for players.",
+    "cardType": "definition"
+  },
+  {
+    "id": "fc-ev-005",
+    "moduleTag": "expected-value-casino",
+    "front": "Slot machine pays 92 cents per dollar wagered. What's the house edge?",
+    "back": "E(profit per $1) = $0.92 − $1.00 = −$0.08\n\nHouse Edge = −(−$0.08) × 100% = 8%\n\nThe casino keeps 8 cents of every dollar played.\n\nAlternatively: 100% − 92% = 8% house edge",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-bn-001",
+    "moduleTag": "binomial",
+    "front": "What are the 4 conditions for binomial?",
+    "back": "B-I-N-S:\n\n1. Binary outcomes (success/failure only)\n2. Independent trials\n3. Number of trials is fixed (n)\n4. Same probability (p) for each trial\n\nExample: 10 coin flips, counting heads ✓\nCounter-example: Drawing cards without replacement ✗",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-bn-002",
+    "moduleTag": "binomial",
+    "front": "Binomial mean and standard deviation formulas",
+    "back": "Mean: μ = np\nStandard deviation: σ = √(npq)\n\nwhere q = 1 − p\n\nExample: n=100, p=0.3, q=0.7\nμ = 100(0.3) = 30\nσ = √(100 × 0.3 × 0.7) = √21 = 4.58",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-bn-003",
+    "moduleTag": "binomial",
+    "front": "How do I translate probability phrases?",
+    "back": "• \"Exactly k\" → P(X = k)\n• \"At most k\" → P(X ≤ k)\n• \"At least k\" → P(X ≥ k)\n• \"Fewer than k\" → P(X < k) = P(X ≤ k−1)\n• \"More than k\" → P(X > k) = P(X ≥ k+1)\n\nTip: \"At least 1\" = 1 − P(X = 0)",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-bn-004",
+    "moduleTag": "binomial",
+    "front": "When is a binomial outcome unusual?",
+    "back": "Method 1: Check if x is outside μ ± 2σ\n\nMethod 2: Check if P(X = k) < 0.05\n\nExample: n=100, p=0.5\nμ = 50, σ = 5\nUsual range: 40 to 60\n\nGetting 35 heads is unusual (outside range)",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-bn-005",
+    "moduleTag": "binomial",
+    "front": "Complement shortcut for binomial",
+    "back": "P(X ≥ 1) = 1 − P(X = 0)\n\nMuch easier than calculating P(1) + P(2) + ... + P(n)!\n\nExample: P(at least one defective in 20 items)\n= 1 − P(0 defective)\n= 1 − (0.95)^20\n= 1 − 0.358 = 0.642",
+    "cardType": "formula"
+  },
+  {
+    "id": "fc-bn-006",
+    "moduleTag": "binomial",
+    "front": "Why is drawing cards WITHOUT replacement NOT binomial?",
+    "back": "The trials are NOT independent!\n\nWithout replacement:\n• P(Ace on 1st draw) = 4/52\n• P(Ace on 2nd draw | Ace on 1st) = 3/51\n\nProbability CHANGES with each draw.\n\nWith replacement would be binomial (probability stays 4/52).",
+    "cardType": "rule"
+  },
+  {
+    "id": "fc-bn-007",
+    "moduleTag": "binomial",
+    "front": "How do I identify n, p, q in a problem?",
+    "back": "n = number of trials (fixed)\np = probability of success (what you're counting)\nq = 1 − p (probability of failure)\n\nExample: Flip coin 10 times, count heads\nn = 10 trials\np = 0.5 (P of heads)\nq = 0.5 (P of tails)",
+    "cardType": "rule"
+  }
+]

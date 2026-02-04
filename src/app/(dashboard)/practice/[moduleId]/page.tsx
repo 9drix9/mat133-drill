@@ -207,26 +207,29 @@ export default function PracticeSessionPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => router.push("/practice")}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-2xl font-bold">{currentModule.name}</h1>
-            <p className="text-sm text-muted-foreground">
-              Question {currentIndex + 1} of {questions.length}
-            </p>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.push("/practice")}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold">{currentModule.name}</h1>
+              <p className="text-sm text-muted-foreground">
+                Question {currentIndex + 1} of {questions.length}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <Badge variant="outline">
+          <Badge variant="outline" className="text-sm">
             {stats.correct}/{stats.total} correct
           </Badge>
+        </div>
+        {/* Options row - hidden on mobile, shown at bottom */}
+        <div className="hidden sm:flex items-center justify-end gap-2">
           <Select value={questionCount} onValueChange={setQuestionCount}>
             <SelectTrigger className="w-24">
               <SelectValue />

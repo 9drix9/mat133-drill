@@ -63,23 +63,23 @@ export default function PracticePage() {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="text-sm text-muted-foreground">
-                    <p className="font-medium mb-2">Topics covered:</p>
-                    <ul className="list-disc list-inside space-y-1">
-                      {module.topics.slice(0, 4).map((topic) => (
-                        <li key={topic} className="text-xs">
-                          {topic}
-                        </li>
-                      ))}
-                      {module.topics.length > 4 && (
-                        <li className="text-xs text-primary">
-                          +{module.topics.length - 4} more
-                        </li>
-                      )}
-                    </ul>
-                  </div>
+              <CardContent className="space-y-4">
+                <div className="text-sm text-muted-foreground">
+                  <p className="font-medium mb-2">Topics covered:</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    {module.topics.slice(0, 4).map((topic) => (
+                      <li key={topic} className="text-xs">
+                        {topic}
+                      </li>
+                    ))}
+                    {module.topics.length > 4 && (
+                      <li className="text-xs text-primary">
+                        +{module.topics.length - 4} more
+                      </li>
+                    )}
+                  </ul>
+                </div>
+                <div className="pt-2 border-t">
                   <Link href={`/practice/${module.id}`}>
                     <Button className="w-full">Start Practice</Button>
                   </Link>

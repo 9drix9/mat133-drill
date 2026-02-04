@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  attempts       QuestionAttempt[]
+  flashcardState FlashcardState[]
+  examSessions   ExamSession[]
+  moduleProgress ModuleProgress[]
+}
+
+model Question {
+  id            String   @id @default(cuid())
+  moduleTag     String
+  prompt        String
+  choices       String?  // JSON array of choices
+  correctAnswer String
+  roundingRule  String?
+  units         String?
+  difficulty    Int      @default(1)
+  solutionSteps String   // JSON array of steps
+  isGenerated   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  attempts QuestionAttempt[]
+
+  @@index([moduleTag])
+}
+
+model QuestionAttempt {
+  id           String   @id @default(cuid())
+  userId       String
+  questionId   String
+  userAnswer   String
+  isCorrect    Boolean
+  timeSpentMs  Int?
+  attemptedAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([questionId])
+}
+
+model Flashcard {
+  id          String   @id @default(cuid())
+  moduleTag   String
+  front       String
+  back        String
+  cardType    String   // formula, definition, rule
+  createdAt   DateTime @default(now())
+
+  states FlashcardState[]
+
+  @@index([moduleTag])
+}
+
+model FlashcardState {
+  id          String   @id @default(cuid())
+  userId      String
+  flashcardId String
+  easeFactor  Float    @default(2.5)
+  interval    Int      @default(1)
+  repetitions Int      @default(0)
+  nextReview  DateTime @default(now())
+  lastReview  DateTime?
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  flashcard Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, flashcardId])
+  @@index([userId, nextReview])
+}
+
+model ExamSession {
+  id          String   @id @default(cuid())
+  userId      String
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  timeLimit   Int?     // minutes
+  score       Float?
+  totalQuestions Int
+  questionIds String   // JSON array of question IDs
+  answers     String?  // JSON object of questionId -> answer
+  results     String?  // JSON array of results
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model ModuleProgress {
+  id            String   @id @default(cuid())
+  userId        String
+  moduleTag     String
+  totalAttempts Int      @default(0)
+  correctCount  Int      @default(0)
+  lastPracticed DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, moduleTag])
+  @@index([userId])
+}

@@ -1,0 +1,18 @@
+{
+  "name": "MAT133 Drill",
+  "short_name": "MAT133 Drill",
+  "description": "Statistics study guide for MAT 133 midterm",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

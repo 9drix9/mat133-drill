@@ -139,6 +139,33 @@ export default function PracticeSessionPage() {
     }
   };
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      // Enter to check answer or go to next question
+      if (e.key === "Enter") {
+        if (isCorrect !== null) {
+          // Answer already checked, go to next
+          if (currentIndex < questions.length - 1) {
+            nextQuestion();
+          }
+        } else if (userAnswer.trim()) {
+          // Check the answer
+          handleCheckAnswer();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCorrect, userAnswer, currentIndex, questions.length]);
+
   if (!currentModule) {
     return (
       <div className="text-center py-12">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -90,6 +90,50 @@ export default function FlashcardsPage() {
       console.error("Failed to rate card:", error);
     }
   };
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      switch (e.key) {
+        case " ": // Space to flip
+          e.preventDefault();
+          setFlipped((f) => !f);
+          break;
+        case "ArrowLeft": // Previous card
+          if (currentIndex > 0) {
+            setCurrentIndex((prev) => prev - 1);
+            setFlipped(false);
+          }
+          break;
+        case "ArrowRight": // Next card
+          if (currentIndex < flashcards.length - 1) {
+            setCurrentIndex((prev) => prev + 1);
+            setFlipped(false);
+          }
+          break;
+        case "0":
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+          // Rate card with number keys (only when flipped)
+          if (flipped && currentCard) {
+            rateCard(parseInt(e.key));
+          }
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex, flashcards.length, flipped, currentCard]);
 
   if (loading) {
     return (
@@ -200,7 +244,7 @@ export default function FlashcardsPage() {
                   </p>
                   {!flipped && (
                     <p className="text-sm text-muted-foreground">
-                      Click to reveal answer
+                      Click or press Space to reveal answer
                     </p>
                   )}
                 </div>
@@ -247,6 +291,7 @@ export default function FlashcardsPage() {
               </div>
               <p className="text-center text-xs text-muted-foreground">
                 {getQualityDescription(3)} → {getNextReviewText(1)}
+                <span className="hidden sm:inline"> • Press 0-5 to rate</span>
               </p>
             </div>
           )}

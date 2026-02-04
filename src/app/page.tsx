@@ -2,12 +2,18 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart3, Brain, Calculator, GraduationCap, Target, Trophy } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen">
+      {/* Header with theme toggle */}
+      <header className="container mx-auto px-4 py-4 flex justify-end">
+        <ThemeToggle />
+      </header>
+
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 text-center">
+      <section className="container mx-auto px-4 py-12 text-center">
         <div className="mx-auto max-w-3xl space-y-6">
           <div className="flex justify-center">
             <div className="rounded-full bg-primary/10 p-4">

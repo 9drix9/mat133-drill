@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { shuffleArray } from "@/lib/utils";
 
 export async function GET(request: Request) {
   try {
@@ -18,14 +19,16 @@ export async function GET(request: Request) {
     if (moduleTag) where.moduleTag = moduleTag;
     if (difficulty) where.difficulty = parseInt(difficulty);
 
+    // Get more questions than needed, then shuffle and take limit
     const questions = await prisma.question.findMany({
       where,
-      take: limit,
-      orderBy: { createdAt: "desc" },
     });
 
+    // Shuffle and take the requested limit
+    const shuffled = shuffleArray(questions).slice(0, limit);
+
     // Parse JSON fields
-    const parsed = questions.map((q) => ({
+    const parsed = shuffled.map((q) => ({
       ...q,
       choices: q.choices ? JSON.parse(q.choices) : null,
       solutionSteps: JSON.parse(q.solutionSteps),

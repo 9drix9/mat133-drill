@@ -79,7 +79,7 @@ export async function POST(request: Request) {
       },
       update: {
         totalAttempts: { increment: 1 },
-        correctCount: isCorrect ? { increment: 1 } : undefined,
+        ...(isCorrect && { correctCount: { increment: 1 } }),
         lastPracticed: new Date(),
       },
     });

@@ -11,11 +11,13 @@ import {
   ClipboardList,
   GraduationCap,
   LayoutDashboard,
+  Loader2,
   LogOut,
   Menu,
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface User {
   id: string;
@@ -35,8 +37,11 @@ export function DashboardNav({ user }: { user: User }) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = async () => {
+    if (loggingOut) return;
+    setLoggingOut(true);
     await fetch("/api/auth/logout", { method: "POST" });
     router.push("/login");
     router.refresh();
@@ -81,8 +86,9 @@ export function DashboardNav({ user }: { user: User }) {
             <span className="text-sm text-muted-foreground">
               {user.username}
             </span>
-            <Button variant="ghost" size="sm" onClick={handleLogout}>
-              <LogOut className="h-4 w-4" />
+            <ThemeToggle />
+            <Button variant="ghost" size="sm" onClick={handleLogout} disabled={loggingOut}>
+              {loggingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogOut className="h-4 w-4" />}
             </Button>
           </div>
 
@@ -130,10 +136,13 @@ export function DashboardNav({ user }: { user: User }) {
                 <span className="text-sm text-muted-foreground">
                   {user.username}
                 </span>
-                <Button variant="ghost" size="sm" onClick={handleLogout}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout
-                </Button>
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <Button variant="ghost" size="sm" onClick={handleLogout} disabled={loggingOut}>
+                    {loggingOut ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <LogOut className="h-4 w-4 mr-2" />}
+                    {loggingOut ? "Logging out..." : "Logout"}
+                  </Button>
+                </div>
               </div>
             </nav>
           </div>

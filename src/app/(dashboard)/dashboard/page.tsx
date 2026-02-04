@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { MODULES } from "@/types";
 import { ModuleCard } from "@/components/practice/module-card";
 import { StatsOverview } from "@/components/practice/stats-overview";
+import { StudyRecommendations } from "@/components/practice/study-recommendations";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
@@ -112,6 +113,19 @@ export default async function DashboardPage() {
         avgExamScore={avgExamScore}
         examCount={recentExams.length}
       />
+
+      {/* Study Recommendations - show for users with some progress */}
+      {!isNewUser && (
+        <StudyRecommendations
+          progress={progress.map((p) => ({
+            moduleTag: p.moduleTag,
+            totalAttempts: p.totalAttempts,
+            correctCount: p.correctCount,
+          }))}
+          totalDueCards={totalDueCards}
+          modules={MODULES.map((m) => ({ id: m.id, name: m.name }))}
+        />
+      )}
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {MODULES.map((module) => {

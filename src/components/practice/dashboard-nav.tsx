@@ -8,13 +8,16 @@ import {
   BookOpen,
   Brain,
   Calculator,
+  CheckSquare,
   ClipboardList,
+  FileText,
   GraduationCap,
   LayoutDashboard,
   Loader2,
   LogOut,
   Menu,
   X,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -29,8 +32,11 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/practice", label: "Practice", icon: BookOpen },
   { href: "/flashcards", label: "Flashcards", icon: Brain },
+  { href: "/quick-review", label: "Quick Review", icon: Zap },
+  { href: "/exam-prep", label: "Exam Prep", icon: CheckSquare },
   { href: "/exam", label: "Mock Exam", icon: ClipboardList },
   { href: "/calculator", label: "Calculator", icon: Calculator },
+  { href: "/formulas", label: "Formulas", icon: FileText },
 ];
 
 export function DashboardNav({ user }: { user: User }) {

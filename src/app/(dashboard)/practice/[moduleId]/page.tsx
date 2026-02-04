@@ -30,12 +30,25 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+// Modules that have question generators
+const MODULES_WITH_GENERATORS = new Set([
+  'frequency-tables',
+  'quartiles-iqr',
+  'normal-distribution',
+  'regression-correlation',
+  'contingency-tables',
+  'discrete-distributions',
+  'expected-value-casino',
+  'binomial',
+]);
+
 export default function PracticeSessionPage() {
   const params = useParams();
   const router = useRouter();
   const moduleId = params.moduleId as string;
 
   const currentModule = MODULES.find((m) => m.id === moduleId);
+  const hasGenerator = MODULES_WITH_GENERATORS.has(moduleId);
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -190,12 +203,16 @@ export default function PracticeSessionPage() {
       <div className="text-center py-12 space-y-4">
         <h1 className="text-2xl font-bold">No questions available</h1>
         <p className="text-muted-foreground">
-          Try enabling generated questions or check back later.
+          {hasGenerator
+            ? "Try enabling generated questions or check back later."
+            : "No stored questions found for this topic. Check back later."}
         </p>
         <div className="flex justify-center gap-4">
-          <Button onClick={() => setUseGenerator(true)}>
-            Try Generated Questions
-          </Button>
+          {hasGenerator && (
+            <Button onClick={() => setUseGenerator(true)}>
+              Try Generated Questions
+            </Button>
+          )}
           <Button variant="outline" onClick={() => router.push("/practice")}>
             Back to Practice
           </Button>
@@ -241,13 +258,15 @@ export default function PracticeSessionPage() {
               <SelectItem value="20">20 Q&apos;s</SelectItem>
             </SelectContent>
           </Select>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setUseGenerator(!useGenerator)}
-          >
-            {useGenerator ? "Use Stored" : "Generate New"}
-          </Button>
+          {hasGenerator && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setUseGenerator(!useGenerator)}
+            >
+              {useGenerator ? "Use Stored" : "Generate New"}
+            </Button>
+          )}
           <Link href={`/flashcards?module=${moduleId}`}>
             <Button variant="outline" size="sm">
               <BookOpen className="h-4 w-4 mr-2" />
@@ -474,14 +493,16 @@ export default function PracticeSessionPage() {
             <SelectItem value="20">20 Q&apos;s</SelectItem>
           </SelectContent>
         </Select>
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-9 text-xs px-2"
-          onClick={() => setUseGenerator(!useGenerator)}
-        >
-          {useGenerator ? "Stored" : "Generate"}
-        </Button>
+        {hasGenerator && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 text-xs px-2"
+            onClick={() => setUseGenerator(!useGenerator)}
+          >
+            {useGenerator ? "Stored" : "Generate"}
+          </Button>
+        )}
         <Link href={`/flashcards?module=${moduleId}`}>
           <Button variant="outline" size="sm" className="h-9 text-xs px-2">
             <BookOpen className="h-3 w-3 mr-1" />

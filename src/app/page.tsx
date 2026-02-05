@@ -212,6 +212,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t py-8 text-center text-sm text-muted-foreground">
         <p>MAT133 Drill - Statistics Study Guide</p>
+        <p className="mt-2">Made by Logan Morris and Ricky Thach</p>
       </footer>
     </div>
   );
